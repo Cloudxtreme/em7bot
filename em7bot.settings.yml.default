@@ -1,0 +1,8 @@
+settings:
+  api_url_base: https://your.url
+  channels:
+    em7bot:
+      ignore_updated_by: [0]
+      queues: [0]
+      quite: falifc se
+  queryheaders: {Accept: '*/*', Authorization: Basic md5SumedPasswordHere, X-em7-beautify-response: 1}
