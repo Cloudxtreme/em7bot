@@ -283,6 +283,7 @@ class em7:
         self.api_get_tickets()
         print "Finished ticket poll"
         print self.messages
+        self.ircPushMsgs()
 
     # This is called every hour from the bot framework level
     def task3600(self):
@@ -291,8 +292,8 @@ class em7:
 
     # This is called every second from the botframework level
     def task1(self):
-        # Message sender
-        self.ircPushMsgs()
+        #There was a need for this, might be used later so leaving fragment behind
+        pass
 
     # This is called to join the channels after the recactor starts
     def joinSetChannels(self):
