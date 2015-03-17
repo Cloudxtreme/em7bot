@@ -219,13 +219,15 @@ class em7:
                 else:
                     tmp_x = cmdArgs[1]
 
+                print tmp_x
+
                 if tmp_x[1:] in self.channels:
                     '''
                     Channel Information for: #em7
                     Announceing Ticket QIDs: 234, Silent: True, Ignoring Updates by UIDs: 123,123,123,
                     '''
                     message = "Channel Information for: %s\n" % tmp_x
-                    message = "%sTicket QIDs: %s, Ignore UIDs: %s, Silent: %s" % (message, self.channels[channel[1:]]['queues'], self.channels[channel[1:]]['ignore_updated_by'], self.channels[channel[1:]]['quite'])
+                    message = "%sTicket QIDs: %s, Ignore UIDs: %s, Silent: %s" % (message, self.channels[tmp_x[1:]]['queues'], self.channels[tmp_x[1:]]['ignore_updated_by'], self.channels[tmp_x[1:]]['quite'])
                     self.irc_msg(channel, message)
                     del message
                 else:
@@ -292,7 +294,7 @@ class em7:
 
     # This is called every second from the botframework level
     def task1(self):
-        #There was a need for this, might be used later so leaving fragment behind
+        # There was a need for this, might be used later so leaving fragment behind
         pass
 
     # This is called to join the channels after the recactor starts
