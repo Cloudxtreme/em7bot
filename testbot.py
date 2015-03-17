@@ -11,12 +11,11 @@ class FrameBot(irc.IRCClient):
     # Try to keep track of the channels were in
     channels = []
     nickname = "frameBot"
-    realname = "FrameBot 0.0.1"
+    realname = "FrameBot 0.0.2"
     versionName = "FrameBot"
-    versionNum = "0.0.1"
-    sourceURL = "http://wiki.hostedsolutions.com/EM7:em7bot"
+    versionNum = "0.0.2"
     heartbeatInterval = 30
-    #password = "em7bot/WHS:em7bot"
+    password = "znc/network:password"
 
     # Get our nickname
     def _get_nickname(self):
@@ -53,9 +52,9 @@ class FrameBot(irc.IRCClient):
         else:
             direct = False
 
-        if len(msg.split(self.cmdTrigger)) > 1:
+        if msg.startswith(self.cmdTrigger):
             isCmd = True
-            trigger = "!"
+            trigger = self.cmdTrigger
         elif msg.startswith(self.nickname + ":"):
             isCmd = True
             trigger = self.nickname + ": "
@@ -69,7 +68,7 @@ class FrameBot(irc.IRCClient):
 class FrameBotFactory(protocol.ClientFactory):
     protocol = FrameBot
 
-    def __init__(self, channel, nickname='frameBot', cmdTrigger="!", api=None):
+    def __init__(self, channel, nickname='frameBot', cmdTrigger="^", api=None):
         self.channel = channel
         self.nickname = nickname
         self.realname = "FrameBot 0.0.1"
@@ -88,9 +87,9 @@ class FrameBotFactory(protocol.ClientFactory):
 
 if __name__ == "__main__":
     log.startLogging(sys.stdout)
-    print "Initalizing EM7 API"
+    print "Initializing EM7 API"
     em7api = em7.em7()
-    print "Initalized"
+    print "Initialized"
 
     print "Prepping deferred tasks"
     task_1 = task.LoopingCall(em7api.task30)
@@ -104,6 +103,6 @@ if __name__ == "__main__":
     print "Prepped"
 
     print "Starting Bot"
-    #reactor.connectTCP('192.168.1.220', 1025, FrameBotFactory('#em7bot', api=em7api))
-    reactor.connectTCP('irc.hostedsolutions.com', 6667, FrameBotFactory('#em7bot', api=em7api))
+    # Connect to in-house ZNC server
+    reactor.connectTCP('192.168.1.220', 1025, FrameBotFactory('#em7bot', api=em7api))
     reactor.run()
